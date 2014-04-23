@@ -1,0 +1,472 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E2EB875719076BDA005A73FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB875619076BDA005A73FE /* Foundation.framework */; };
+		E2EB875919076BDA005A73FE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB875819076BDA005A73FE /* CoreGraphics.framework */; };
+		E2EB875B19076BDA005A73FE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB875A19076BDA005A73FE /* UIKit.framework */; };
+		E2EB876119076BDA005A73FE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2EB875F19076BDA005A73FE /* InfoPlist.strings */; };
+		E2EB876319076BDA005A73FE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2EB876219076BDA005A73FE /* main.m */; };
+		E2EB876719076BDA005A73FE /* KartAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2EB876619076BDA005A73FE /* KartAppDelegate.m */; };
+		E2EB876A19076BDA005A73FE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2EB876819076BDA005A73FE /* Main.storyboard */; };
+		E2EB876D19076BDA005A73FE /* KartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2EB876C19076BDA005A73FE /* KartViewController.m */; };
+		E2EB876F19076BDA005A73FE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2EB876E19076BDA005A73FE /* Images.xcassets */; };
+		E2EB877619076BDA005A73FE /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB877519076BDA005A73FE /* XCTest.framework */; };
+		E2EB877719076BDA005A73FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB875619076BDA005A73FE /* Foundation.framework */; };
+		E2EB877819076BDA005A73FE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB875A19076BDA005A73FE /* UIKit.framework */; };
+		E2EB878019076BDA005A73FE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2EB877E19076BDA005A73FE /* InfoPlist.strings */; };
+		E2EB878219076BDA005A73FE /* KartTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E2EB878119076BDA005A73FE /* KartTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E2EB877919076BDA005A73FE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2EB874B19076BDA005A73FE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E2EB875219076BDA005A73FE;
+			remoteInfo = Kart;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E2EB875319076BDA005A73FE /* Kart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kart.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2EB875619076BDA005A73FE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E2EB875819076BDA005A73FE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		E2EB875A19076BDA005A73FE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		E2EB875E19076BDA005A73FE /* Kart-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Kart-Info.plist"; sourceTree = "<group>"; };
+		E2EB876019076BDA005A73FE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E2EB876219076BDA005A73FE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E2EB876419076BDA005A73FE /* Kart-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Kart-Prefix.pch"; sourceTree = "<group>"; };
+		E2EB876519076BDA005A73FE /* KartAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KartAppDelegate.h; sourceTree = "<group>"; };
+		E2EB876619076BDA005A73FE /* KartAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KartAppDelegate.m; sourceTree = "<group>"; };
+		E2EB876919076BDA005A73FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E2EB876B19076BDA005A73FE /* KartViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KartViewController.h; sourceTree = "<group>"; };
+		E2EB876C19076BDA005A73FE /* KartViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KartViewController.m; sourceTree = "<group>"; };
+		E2EB876E19076BDA005A73FE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		E2EB877419076BDA005A73FE /* KartTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KartTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2EB877519076BDA005A73FE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		E2EB877D19076BDA005A73FE /* KartTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KartTests-Info.plist"; sourceTree = "<group>"; };
+		E2EB877F19076BDA005A73FE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E2EB878119076BDA005A73FE /* KartTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KartTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E2EB875019076BDA005A73FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2EB875919076BDA005A73FE /* CoreGraphics.framework in Frameworks */,
+				E2EB875B19076BDA005A73FE /* UIKit.framework in Frameworks */,
+				E2EB875719076BDA005A73FE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2EB877119076BDA005A73FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2EB877619076BDA005A73FE /* XCTest.framework in Frameworks */,
+				E2EB877819076BDA005A73FE /* UIKit.framework in Frameworks */,
+				E2EB877719076BDA005A73FE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E2EB874A19076BDA005A73FE = {
+			isa = PBXGroup;
+			children = (
+				E2EB875C19076BDA005A73FE /* Kart */,
+				E2EB877B19076BDA005A73FE /* KartTests */,
+				E2EB875519076BDA005A73FE /* Frameworks */,
+				E2EB875419076BDA005A73FE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E2EB875419076BDA005A73FE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E2EB875319076BDA005A73FE /* Kart.app */,
+				E2EB877419076BDA005A73FE /* KartTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E2EB875519076BDA005A73FE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E2EB875619076BDA005A73FE /* Foundation.framework */,
+				E2EB875819076BDA005A73FE /* CoreGraphics.framework */,
+				E2EB875A19076BDA005A73FE /* UIKit.framework */,
+				E2EB877519076BDA005A73FE /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E2EB875C19076BDA005A73FE /* Kart */ = {
+			isa = PBXGroup;
+			children = (
+				E2EB876519076BDA005A73FE /* KartAppDelegate.h */,
+				E2EB876619076BDA005A73FE /* KartAppDelegate.m */,
+				E2EB876819076BDA005A73FE /* Main.storyboard */,
+				E2EB876B19076BDA005A73FE /* KartViewController.h */,
+				E2EB876C19076BDA005A73FE /* KartViewController.m */,
+				E2EB876E19076BDA005A73FE /* Images.xcassets */,
+				E2EB875D19076BDA005A73FE /* Supporting Files */,
+			);
+			path = Kart;
+			sourceTree = "<group>";
+		};
+		E2EB875D19076BDA005A73FE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E2EB875E19076BDA005A73FE /* Kart-Info.plist */,
+				E2EB875F19076BDA005A73FE /* InfoPlist.strings */,
+				E2EB876219076BDA005A73FE /* main.m */,
+				E2EB876419076BDA005A73FE /* Kart-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E2EB877B19076BDA005A73FE /* KartTests */ = {
+			isa = PBXGroup;
+			children = (
+				E2EB878119076BDA005A73FE /* KartTests.m */,
+				E2EB877C19076BDA005A73FE /* Supporting Files */,
+			);
+			path = KartTests;
+			sourceTree = "<group>";
+		};
+		E2EB877C19076BDA005A73FE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E2EB877D19076BDA005A73FE /* KartTests-Info.plist */,
+				E2EB877E19076BDA005A73FE /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E2EB875219076BDA005A73FE /* Kart */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2EB878519076BDA005A73FE /* Build configuration list for PBXNativeTarget "Kart" */;
+			buildPhases = (
+				E2EB874F19076BDA005A73FE /* Sources */,
+				E2EB875019076BDA005A73FE /* Frameworks */,
+				E2EB875119076BDA005A73FE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Kart;
+			productName = Kart;
+			productReference = E2EB875319076BDA005A73FE /* Kart.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E2EB877319076BDA005A73FE /* KartTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2EB878819076BDA005A73FE /* Build configuration list for PBXNativeTarget "KartTests" */;
+			buildPhases = (
+				E2EB877019076BDA005A73FE /* Sources */,
+				E2EB877119076BDA005A73FE /* Frameworks */,
+				E2EB877219076BDA005A73FE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E2EB877A19076BDA005A73FE /* PBXTargetDependency */,
+			);
+			name = KartTests;
+			productName = KartTests;
+			productReference = E2EB877419076BDA005A73FE /* KartTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E2EB874B19076BDA005A73FE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = Kart;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Stanford Electric Go Kart";
+				TargetAttributes = {
+					E2EB877319076BDA005A73FE = {
+						TestTargetID = E2EB875219076BDA005A73FE;
+					};
+				};
+			};
+			buildConfigurationList = E2EB874E19076BDA005A73FE /* Build configuration list for PBXProject "Kart" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E2EB874A19076BDA005A73FE;
+			productRefGroup = E2EB875419076BDA005A73FE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E2EB875219076BDA005A73FE /* Kart */,
+				E2EB877319076BDA005A73FE /* KartTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E2EB875119076BDA005A73FE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2EB876F19076BDA005A73FE /* Images.xcassets in Resources */,
+				E2EB876119076BDA005A73FE /* InfoPlist.strings in Resources */,
+				E2EB876A19076BDA005A73FE /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2EB877219076BDA005A73FE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2EB878019076BDA005A73FE /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E2EB874F19076BDA005A73FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2EB876719076BDA005A73FE /* KartAppDelegate.m in Sources */,
+				E2EB876319076BDA005A73FE /* main.m in Sources */,
+				E2EB876D19076BDA005A73FE /* KartViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2EB877019076BDA005A73FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2EB878219076BDA005A73FE /* KartTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E2EB877A19076BDA005A73FE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E2EB875219076BDA005A73FE /* Kart */;
+			targetProxy = E2EB877919076BDA005A73FE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E2EB875F19076BDA005A73FE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E2EB876019076BDA005A73FE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E2EB876819076BDA005A73FE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E2EB876919076BDA005A73FE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E2EB877E19076BDA005A73FE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E2EB877F19076BDA005A73FE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E2EB878319076BDA005A73FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E2EB878419076BDA005A73FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E2EB878619076BDA005A73FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Kart/Kart-Prefix.pch";
+				INFOPLIST_FILE = "Kart/Kart-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		E2EB878719076BDA005A73FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Kart/Kart-Prefix.pch";
+				INFOPLIST_FILE = "Kart/Kart-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		E2EB878919076BDA005A73FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Kart.app/Kart";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Kart/Kart-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "KartTests/KartTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		E2EB878A19076BDA005A73FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Kart.app/Kart";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Kart/Kart-Prefix.pch";
+				INFOPLIST_FILE = "KartTests/KartTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E2EB874E19076BDA005A73FE /* Build configuration list for PBXProject "Kart" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2EB878319076BDA005A73FE /* Debug */,
+				E2EB878419076BDA005A73FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E2EB878519076BDA005A73FE /* Build configuration list for PBXNativeTarget "Kart" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2EB878619076BDA005A73FE /* Debug */,
+				E2EB878719076BDA005A73FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		E2EB878819076BDA005A73FE /* Build configuration list for PBXNativeTarget "KartTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2EB878919076BDA005A73FE /* Debug */,
+				E2EB878A19076BDA005A73FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E2EB874B19076BDA005A73FE /* Project object */;
+}
