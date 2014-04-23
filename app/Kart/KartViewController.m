@@ -7,12 +7,42 @@
 //
 
 #import "KartViewController.h"
+#import "Bluetooth.h"
 
 @interface KartViewController ()
-
+@property (weak, nonatomic) IBOutlet UIButton *goButton;
+@property (weak, nonatomic) IBOutlet UIButton *stopButton;
+@property (weak, nonatomic) IBOutlet UILabel *overlay;
+@property (strong, nonatomic) Bluetooth *bluetooth;
 @end
 
 @implementation KartViewController
+
+- (Bluetooth *)bluetooth
+{
+    if (!_bluetooth) _bluetooth = [[Bluetooth alloc] init];
+    return _bluetooth;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    NSLayoutConstraint *stopButtonConstrain = [NSLayoutConstraint constraintWithItem:self.stopButton
+                                                                 attribute:NSLayoutAttributeWidth
+                                                                 relatedBy:0
+                                                                    toItem:self.view
+                                                                 attribute:NSLayoutAttributeWidth
+                                                                multiplier:.5
+                                                                  constant:0];
+    NSLayoutConstraint *goButtonConstrain = [NSLayoutConstraint constraintWithItem:self.stopButton
+                                                                 attribute:NSLayoutAttributeWidth
+                                                                 relatedBy:0
+                                                                    toItem:self.view
+                                                                 attribute:NSLayoutAttributeWidth
+                                                                multiplier:.5
+                                                                  constant:0];
+    [self.view addConstraint:stopButtonConstrain];
+    [self.view addConstraint:goButtonConstrain];
+}
 
 - (void)viewDidLoad
 {
