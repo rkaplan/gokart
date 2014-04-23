@@ -1,5 +1,5 @@
 # Software to control an electric go-kart
-Divided into 3 master directories (arduino, app).
+Divided into 2 master directories (arduino, app).
 
 ### arduino
 This software runs on our Arduino microcontroller. It operates and checks the status of various go-kart parts (e.g. motors, battery, and linear actuator). It also communicates with a smartphone via bluetooth shield.
