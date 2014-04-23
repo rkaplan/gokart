@@ -119,6 +119,7 @@ NSTimer *rssiTimer;
         int value = pitch * 512 + 512;
         value = MAX(0, value);
         value = MIN(1023, value);
+        NSLog(@"%d", value);
         [self sendLActuator:value];
         [NSThread sleepForTimeInterval:.2];
     }
@@ -151,11 +152,30 @@ NSTimer *rssiTimer;
     }
 }
 
+-(void) testingAccelerometerData
+{
+    NSTimeInterval interval = .1; // 100ms
+    [[self motionManager] setDeviceMotionUpdateInterval:interval];
+    
+    [[self motionManager] startDeviceMotionUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMDeviceMotion *data, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            double pitch = data.attitude.pitch;
+            int value = pitch * 512 + 512;
+            value = MAX(0, value);
+            value = MIN(1023, value);
+            NSLog(@"%d", value);
+        });
+    }];
+}
+
 #pragma mark - Actions
 
 // Connect button will call to this
 - (IBAction)btnScanForPeripherals:(id)sender
 {
+    // FOR PLAYING AROUND:
+    [self testingAccelerometerData];
+    
     if (ble.activePeripheral)
         if(ble.activePeripheral.state == CBPeripheralStateConnected)
         {

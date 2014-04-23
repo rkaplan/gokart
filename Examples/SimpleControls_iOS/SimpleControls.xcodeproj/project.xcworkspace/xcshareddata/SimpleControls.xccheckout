@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>A55AE0EF-44A0-4360-A1F6-5D6CFD12A178</string>
+	<string>C44A1338-C4E9-451E-BDBA-5986DB693DB4</string>
 	<key>IDESourceControlProjectName</key>
 	<string>SimpleControls</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>BD34293E-C570-4678-AA19-70F2D815A33D</key>
-		<string>https://github.com/tfmontague/kart.git</string>
+		<key>33968C2B-91D1-40FB-AF70-4042499CF31C</key>
+		<string>ssh://github.com/rkaplan/gokart.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>app/draft/iOS-master/Examples/SimpleControls_iOS/SimpleControls.xcodeproj/project.xcworkspace</string>
+	<string>Examples/SimpleControls_iOS/SimpleControls.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>BD34293E-C570-4678-AA19-70F2D815A33D</key>
-		<string>../../../../../../..</string>
+		<key>33968C2B-91D1-40FB-AF70-4042499CF31C</key>
+		<string>../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/tfmontague/kart.git</string>
+	<string>ssh://github.com/rkaplan/gokart.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>BD34293E-C570-4678-AA19-70F2D815A33D</string>
+	<string>33968C2B-91D1-40FB-AF70-4042499CF31C</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>BD34293E-C570-4678-AA19-70F2D815A33D</string>
+			<string>33968C2B-91D1-40FB-AF70-4042499CF31C</string>
 			<key>IDESourceControlWCCName</key>
-			<string>kart</string>
+			<string>gokart</string>
 		</dict>
 	</array>
 </dict>
