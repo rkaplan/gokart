@@ -38,6 +38,11 @@ static const int BLUETOOTH_FIND_TIMEOUT = 2;
     return _ble;
 }
 
+- (void)notify
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kBluetoothConnectionChanged object:self];
+}
+
 - (void)bleSetup
 {
     [self.ble findBLEPeripherals:BLUETOOTH_FIND_TIMEOUT];
@@ -47,6 +52,7 @@ static const int BLUETOOTH_FIND_TIMEOUT = 2;
             [self.ble connectPeripheral:self.ble.peripherals[0]];
         } else {
             self.didFailToConnect = YES;
+            [self notify];
         }
     });
 }
@@ -55,12 +61,14 @@ static const int BLUETOOTH_FIND_TIMEOUT = 2;
 {
     NSLog(@"Connected");
     self.isConnected = YES;
+    [self notify];
 }
 
 - (void)bleDidDisconnect
 {
     NSLog(@"Disconnected");
     self.isConnected = NO;
+    [self notify];
     [self bleSetup];
 }
 

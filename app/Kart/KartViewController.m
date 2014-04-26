@@ -12,42 +12,65 @@
 @interface KartViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *goButton;
 @property (weak, nonatomic) IBOutlet UIButton *stopButton;
-@property (weak, nonatomic) IBOutlet UILabel *overlay;
+
+@property (strong, nonatomic) IBOutlet UIView *overlay;
+@property (strong, nonatomic) IBOutlet UILabel *loadingBox;
+@property (strong, nonatomic) IBOutlet UILabel *connectingLabel;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *connectingSpinner;
+
 @property (strong, nonatomic) Bluetooth *bluetooth;
 @end
 
 @implementation KartViewController
 
-- (Bluetooth *)bluetooth
+- (void)setupBluetooth
 {
-    if (!_bluetooth) _bluetooth = [[Bluetooth alloc] init];
-    return _bluetooth;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    NSLayoutConstraint *stopButtonConstrain = [NSLayoutConstraint constraintWithItem:self.stopButton
-                                                                 attribute:NSLayoutAttributeWidth
-                                                                 relatedBy:0
-                                                                    toItem:self.view
-                                                                 attribute:NSLayoutAttributeWidth
-                                                                multiplier:.5
-                                                                  constant:0];
-    NSLayoutConstraint *goButtonConstrain = [NSLayoutConstraint constraintWithItem:self.stopButton
-                                                                 attribute:NSLayoutAttributeWidth
-                                                                 relatedBy:0
-                                                                    toItem:self.view
-                                                                 attribute:NSLayoutAttributeWidth
-                                                                multiplier:.5
-                                                                  constant:0];
-    [self.view addConstraint:stopButtonConstrain];
-    [self.view addConstraint:goButtonConstrain];
+    if (!self.bluetooth) self.bluetooth = [[Bluetooth alloc] init];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    [self setupBluetooth];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleBluetoothConnectionChangedNotification:) name:kBluetoothConnectionChanged object:nil];
+}
+
+- (void)handleBluetoothConnectionChangedNotification:(NSNotification *)notification
+{
+    if (self.bluetooth.isConnected) {
+        [self bluetoothDidConnect];
+    } else  {
+        if (self.bluetooth.didFailToConnect) {
+            [self bluetoothDidFailToConnect];
+        } else {
+            [self bluetoothDidDisconnect];
+        }
+    }
+}
+
+// Views that are shown while bluetooth is connecting.
+- (NSArray *)connectingViews
+{
+    return @[self.overlay, self.loadingBox, self.connectingLabel, self.connectingSpinner];
+}
+
+- (void)bluetoothDidConnect
+{
+    for (UIView *view in [self connectingViews]) {
+        view.hidden = YES;
+    }
+}
+
+- (void)bluetoothDidFailToConnect
+{
+}
+
+- (void)bluetoothDidDisconnect
+{
+    for (UIView *view in [self connectingViews]) {
+        view.hidden = NO;
+    }
 }
 
 - (void)didReceiveMemoryWarning

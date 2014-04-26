@@ -10,7 +10,7 @@
 #import <CoreMotion/CoreMotion.h>
 #import "BLE.h"
 
-extern NSString *const kReachabilityChangedNotification;
+extern NSString *const kBluetoothConnectionChanged;
 
 @interface Bluetooth : NSObject <BLEDelegate>
 

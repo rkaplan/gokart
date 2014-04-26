@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>46AE3A7D-4C28-4870-A01B-8B6468121B56</string>
+	<string>A3FBA2C3-A269-461D-9580-95AC7C2B64B1</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Kart</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>BD34293E-C570-4678-AA19-70F2D815A33D</key>
-		<string>https://github.com/tfmontague/kart.git</string>
+		<key>4609AB3C-D3D5-475E-9CC0-4B067FB39915</key>
+		<string>https://github.com/rkaplan/gokart.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>app/Kart.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>BD34293E-C570-4678-AA19-70F2D815A33D</key>
+		<key>4609AB3C-D3D5-475E-9CC0-4B067FB39915</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/tfmontague/kart.git</string>
+	<string>https://github.com/rkaplan/gokart.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>BD34293E-C570-4678-AA19-70F2D815A33D</string>
+	<string>4609AB3C-D3D5-475E-9CC0-4B067FB39915</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>BD34293E-C570-4678-AA19-70F2D815A33D</string>
+			<string>4609AB3C-D3D5-475E-9CC0-4B067FB39915</string>
 			<key>IDESourceControlWCCName</key>
-			<string>kart</string>
+			<string>electricgokart</string>
 		</dict>
 	</array>
 </dict>

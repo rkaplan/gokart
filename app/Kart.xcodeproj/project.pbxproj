@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E2BC7B58190C58F90096C0E0 /* KartUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E2BC7B57190C58F90096C0E0 /* KartUIButton.m */; };
 		E2EB875719076BDA005A73FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB875619076BDA005A73FE /* Foundation.framework */; };
 		E2EB875919076BDA005A73FE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB875819076BDA005A73FE /* CoreGraphics.framework */; };
 		E2EB875B19076BDA005A73FE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB875A19076BDA005A73FE /* UIKit.framework */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E2BC7B56190C58F90096C0E0 /* KartUIButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KartUIButton.h; sourceTree = "<group>"; };
+		E2BC7B57190C58F90096C0E0 /* KartUIButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KartUIButton.m; sourceTree = "<group>"; };
 		E2EB875319076BDA005A73FE /* Kart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2EB875619076BDA005A73FE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E2EB875819076BDA005A73FE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -130,11 +133,11 @@
 			children = (
 				E2EB8790190775BB005A73FE /* Bluetooth.h */,
 				E2EB8791190775BB005A73FE /* Bluetooth.m */,
-				E2EB876519076BDA005A73FE /* KartAppDelegate.h */,
-				E2EB876619076BDA005A73FE /* KartAppDelegate.m */,
 				E2EB876819076BDA005A73FE /* Main.storyboard */,
 				E2EB876B19076BDA005A73FE /* KartViewController.h */,
 				E2EB876C19076BDA005A73FE /* KartViewController.m */,
+				E2BC7B56190C58F90096C0E0 /* KartUIButton.h */,
+				E2BC7B57190C58F90096C0E0 /* KartUIButton.m */,
 				E2EB876E19076BDA005A73FE /* Images.xcassets */,
 				E2EB875D19076BDA005A73FE /* Supporting Files */,
 			);
@@ -144,6 +147,8 @@
 		E2EB875D19076BDA005A73FE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E2EB876519076BDA005A73FE /* KartAppDelegate.h */,
+				E2EB876619076BDA005A73FE /* KartAppDelegate.m */,
 				E2EB875E19076BDA005A73FE /* Kart-Info.plist */,
 				E2EB875F19076BDA005A73FE /* InfoPlist.strings */,
 				E2EB876219076BDA005A73FE /* main.m */,
@@ -282,6 +287,7 @@
 				E2EB8792190775BB005A73FE /* Bluetooth.m in Sources */,
 				E2EB876719076BDA005A73FE /* KartAppDelegate.m in Sources */,
 				E2EB876319076BDA005A73FE /* main.m in Sources */,
+				E2BC7B58190C58F90096C0E0 /* KartUIButton.m in Sources */,
 				E2EB876D19076BDA005A73FE /* KartViewController.m in Sources */,
 				E2EB878F1907754F005A73FE /* BLE.m in Sources */,
 			);
