@@ -17,6 +17,10 @@ extern NSString *const kBluetoothConnectionChanged;
 @property (nonatomic) BOOL isConnected;
 @property (nonatomic) BOOL didFailToConnect;
 
-- (void)sendSteeringValue:(int)value;
+// The following functions do nothing if not connected
+- (void)sendGo;
+- (void)sendStop;
+// Send a value between -1.0 (left) and 1.0 (right)
+- (void)sendSteeringValue:(double)steer;
 
 @end

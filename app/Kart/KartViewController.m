@@ -8,24 +8,62 @@
 
 #import "KartViewController.h"
 #import "Bluetooth.h"
+#import "KartUIButton.h"
 
 @interface KartViewController ()
-@property (weak, nonatomic) IBOutlet UIButton *goButton;
-@property (weak, nonatomic) IBOutlet UIButton *stopButton;
+@property (strong, nonatomic) IBOutlet KartUIButton *stopButton;
+@property (strong, nonatomic) IBOutlet KartUIButton *goButton;
+@property (weak, nonatomic) IBOutlet UIView *accelerometerIndicator;
 
-@property (strong, nonatomic) IBOutlet UIView *overlay;
-@property (strong, nonatomic) IBOutlet UILabel *loadingBox;
-@property (strong, nonatomic) IBOutlet UILabel *connectingLabel;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *connectingSpinner;
+@property (weak, nonatomic) IBOutlet UIView *overlay;
+@property (weak, nonatomic) IBOutlet UILabel *loadingBox;
+@property (weak, nonatomic) IBOutlet UILabel *connectingLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *connectingSpinner;
 
+@property (strong, nonatomic) CMMotionManager *motionManager;
 @property (strong, nonatomic) Bluetooth *bluetooth;
 @end
 
 @implementation KartViewController
 
+static const NSTimeInterval ACCELEROMETER_UPDATE_INTERVAL = 0.1;
+static const NSTimeInterval ACCELERATION_UPDATE_INTERVAL = 0.1;
+
+- (CMMotionManager *)motionManager
+{
+    if (!_motionManager) _motionManager = [[CMMotionManager alloc] init];
+    return _motionManager;
+}
+
 - (void)setupBluetooth
 {
     if (!self.bluetooth) self.bluetooth = [[Bluetooth alloc] init];
+    
+    self.motionManager.deviceMotionUpdateInterval = ACCELEROMETER_UPDATE_INTERVAL;
+    [self.motionManager startDeviceMotionUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMDeviceMotion *data, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            double pitch = data.attitude.pitch;
+            if (pitch < -1) pitch = -1;
+            if (pitch > 1) pitch = 1;
+            CGPoint center = self.accelerometerIndicator.center;
+            center.x = self.accelerometerIndicator.superview.bounds.size.width * (pitch + 1) / 2;
+            [UIView animateWithDuration:ACCELEROMETER_UPDATE_INTERVAL animations:^() {
+                self.accelerometerIndicator.center = center;
+            }];
+            [self.bluetooth sendSteeringValue:pitch];
+        });
+    }];
+    
+    [NSTimer scheduledTimerWithTimeInterval:ACCELERATION_UPDATE_INTERVAL target:self selector:@selector(updateAcceleration:) userInfo:nil repeats:YES];
+}
+
+- (void)updateAcceleration:(NSTimer *)timer
+{
+    if (self.stopButton.isTouchInside) {
+        [self.bluetooth sendStop];
+    } else if (self.goButton.isTouchInside) {
+        [self.bluetooth sendGo];
+    }
 }
 
 - (void)viewDidLoad

@@ -35,6 +35,32 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DUa-6T-zcb">
+                                <rect key="frame" x="0.0" y="285" width="568" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cYV-Hn-QbM">
+                                        <rect key="frame" x="279" y="0.0" width="10" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="10" id="6ka-wg-yvE"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PDg-oq-tU8">
+                                        <rect key="frame" x="282" y="0.0" width="4" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="cYV-Hn-QbM" firstAttribute="centerX" secondItem="DUa-6T-zcb" secondAttribute="centerX" id="4Zw-3f-LwA"/>
+                                    <constraint firstAttribute="bottom" secondItem="cYV-Hn-QbM" secondAttribute="bottom" id="JbX-Ya-UFf"/>
+                                    <constraint firstItem="cYV-Hn-QbM" firstAttribute="top" secondItem="DUa-6T-zcb" secondAttribute="top" id="oPg-cL-ZUw"/>
+                                    <constraint firstAttribute="height" constant="35" id="uta-lq-0nj"/>
+                                </constraints>
+                            </view>
                             <view opaque="NO" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nk7-VP-Gkb">
                                 <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -73,6 +99,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="2vL-Bj-jGX" secondAttribute="trailing" id="7xY-pq-jMC"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="DUa-6T-zcb" secondAttribute="bottom" id="BLu-FS-Iue"/>
                             <constraint firstAttribute="centerY" secondItem="l8H-9E-XwH" secondAttribute="centerY" id="CVY-hb-dpe"/>
                             <constraint firstItem="l8H-9E-XwH" firstAttribute="bottom" secondItem="9Mj-kO-ygu" secondAttribute="bottom" constant="17" id="EJe-PW-Be1"/>
                             <constraint firstAttribute="centerX" secondItem="tvv-y7-pqa" secondAttribute="centerX" id="GVz-OD-ahx"/>
@@ -80,10 +107,12 @@
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Nk7-VP-Gkb" secondAttribute="bottom" id="JE0-qE-jRf"/>
                             <constraint firstItem="Nk7-VP-Gkb" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="S11-Wn-LcR"/>
                             <constraint firstAttribute="centerX" secondItem="l8H-9E-XwH" secondAttribute="centerX" id="UFT-7t-yS8"/>
+                            <constraint firstItem="DUa-6T-zcb" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="aZm-sL-orq"/>
                             <constraint firstAttribute="centerX" secondItem="9Mj-kO-ygu" secondAttribute="centerX" id="abY-i8-Jae"/>
                             <constraint firstItem="2vL-Bj-jGX" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="czE-JS-OT2"/>
                             <constraint firstItem="B5e-Fa-H2f" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" multiplier="0.5" id="dNv-Db-vXl"/>
                             <constraint firstAttribute="trailing" secondItem="Nk7-VP-Gkb" secondAttribute="trailing" id="fn7-9v-W7Y"/>
+                            <constraint firstAttribute="trailing" secondItem="DUa-6T-zcb" secondAttribute="trailing" id="g0c-Gi-qxL"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="2vL-Bj-jGX" secondAttribute="bottom" id="kub-CP-RbT"/>
                             <constraint firstItem="B5e-Fa-H2f" firstAttribute="width" secondItem="2vL-Bj-jGX" secondAttribute="width" id="pq4-lv-VLx"/>
                             <constraint firstAttribute="centerY" secondItem="tvv-y7-pqa" secondAttribute="centerY" id="stS-K2-M0L"/>
@@ -95,12 +124,13 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
+                        <outlet property="accelerometerIndicator" destination="PDg-oq-tU8" id="nJR-gQ-HXN"/>
                         <outlet property="connectingLabel" destination="9Mj-kO-ygu" id="Eq2-5a-hNC"/>
                         <outlet property="connectingSpinner" destination="tvv-y7-pqa" id="rZj-tZ-8L8"/>
-                        <outlet property="goButton" destination="2vL-Bj-jGX" id="2fE-0D-yc6"/>
+                        <outlet property="goButton" destination="2vL-Bj-jGX" id="NOJ-ld-tjv"/>
                         <outlet property="loadingBox" destination="l8H-9E-XwH" id="qoU-8X-qdn"/>
                         <outlet property="overlay" destination="Nk7-VP-Gkb" id="alO-dV-cl1"/>
-                        <outlet property="stopButton" destination="B5e-Fa-H2f" id="Uhe-hQ-9Hq"/>
+                        <outlet property="stopButton" destination="B5e-Fa-H2f" id="dQY-ps-41U"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

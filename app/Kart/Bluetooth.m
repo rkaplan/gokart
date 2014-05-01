@@ -9,13 +9,22 @@
 #import "Bluetooth.h"
 
 @interface Bluetooth()
+
 @property (strong, nonatomic) BLE *ble;
+
+typedef enum {
+    GO = 0x1,
+    STOP = 0x2,
+    STEER = 0x3
+} BluetoothCommand;
+
 @end
 
 @implementation Bluetooth
 
 NSString *const kBluetoothConnectionChanged = @"kBluetoothConnectionChanged";
 static const int BLUETOOTH_FIND_TIMEOUT = 2;
+static const NSTimeInterval CHECK_CM_STATE_INTERVAL = 0.1;
 
 - (instancetype)init
 {
@@ -28,16 +37,6 @@ static const int BLUETOOTH_FIND_TIMEOUT = 2;
     return self;
 }
 
-- (BLE *)ble
-{
-    if (!_ble) {
-        _ble = [[BLE alloc] init];
-        [_ble controlSetup];
-        _ble.delegate = self;
-    }
-    return _ble;
-}
-
 - (void)notify
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kBluetoothConnectionChanged object:self];
@@ -45,16 +44,30 @@ static const int BLUETOOTH_FIND_TIMEOUT = 2;
 
 - (void)bleSetup
 {
-    [self.ble findBLEPeripherals:BLUETOOTH_FIND_TIMEOUT];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, BLUETOOTH_FIND_TIMEOUT * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        if ([self.ble.peripherals count]) {
-            self.didFailToConnect = NO;
-            [self.ble connectPeripheral:self.ble.peripherals[0]];
-        } else {
-            self.didFailToConnect = YES;
-            [self notify];
-        }
-    });
+    _ble = [[BLE alloc] init];
+    [_ble controlSetup];
+    _ble.delegate = self;
+    
+    [NSTimer scheduledTimerWithTimeInterval:CHECK_CM_STATE_INTERVAL target:self selector:@selector(connectIfInitialized:) userInfo:nil repeats:YES];
+}
+
+- (void)connectIfInitialized:(NSTimer *)timer
+{
+    if (self.ble.CM.state == CBCentralManagerStatePoweredOn) {
+        [timer invalidate];
+        [self.ble findBLEPeripherals:BLUETOOTH_FIND_TIMEOUT];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, BLUETOOTH_FIND_TIMEOUT * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            if ([self.ble.peripherals count]) {
+                NSLog(@"Found device");
+                self.didFailToConnect = NO;
+                [self.ble connectPeripheral:self.ble.peripherals[0]];
+            } else {
+                NSLog(@"Failed to connect");
+                self.didFailToConnect = YES;
+                [self notify];
+            }
+        });
+    }
 }
 
 - (void)bleDidConnect
@@ -72,13 +85,35 @@ static const int BLUETOOTH_FIND_TIMEOUT = 2;
     [self bleSetup];
 }
 
-static const int STEER_BYTE = 0x03;
-
-- (void)sendSteeringValue:(int)value
+- (void)sendSteeringValue:(double)steer
 {
-    UInt8 buf[3] = {STEER_BYTE, value >> 8, value};
-    NSData *data = [[NSData alloc] initWithBytes:buf length:3];
-    [self.ble write:data];
+    int value = steer * 512 + 512;
+    if (value < 0) value = 0;
+    if (value > 1023) value = 1023;
+    UInt8 buf[3] = {STEER, value >> 8, value};
+    [self sendThreeBytesIfConnected:buf];
+}
+
+- (void)sendGo
+{
+    NSLog(@"Go");
+    UInt8 buf[3] = {GO, 0, 0};
+    [self sendThreeBytesIfConnected:buf];
+}
+
+- (void)sendStop
+{
+    NSLog(@"Stop");
+    UInt8 buf[3] = {STOP, 0, 0};
+    [self sendThreeBytesIfConnected:buf];
+}
+
+- (void)sendThreeBytesIfConnected:(UInt8[3]) buf
+{
+    if (self.isConnected) {
+        NSData *data = [[NSData alloc] initWithBytes:buf length:3];
+        [self.ble write:data];
+    }
 }
 
 @end
