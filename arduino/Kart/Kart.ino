@@ -36,6 +36,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 uint8_t timer;
 short rotation;     //init rotation at 0. - for Left, + for right.
+uint8_t throttle;
 void setup()
 {
   // Default pins set to 9 and 8 for REQN and RDYN
@@ -53,6 +54,7 @@ void setup()
   pinMode(L_AC, OUTPUT);
   pinMode(L_AC2, OUTPUT);
   rotation = 0;
+  throttle = 0;
   /*pinMode(DIGITAL_OUT_PIN, OUTPUT);
   pinMode(DIGITAL_IN_PIN, INPUT);*/
   
@@ -65,9 +67,6 @@ void setup()
 
 void loop()
 {
-
-  uint8_t throttle  = 0;     //init throttle with throttle at 0.
-
   timer = timer>THROTTLETIMER?THROTTLETIMER:timer+1;
 
 
@@ -80,14 +79,22 @@ void loop()
     byte data2 = ble_read();
     
     if (data0 == 0x01) { // GO
+      Serial.println("Go: ");
+      Serial.println(throttle);
       if(timer == THROTTLETIMER){
-        throttle = throttle>=255?255:throttle + accelerationSpeed;
+        uint8_t new_throttle = throttle + accelerationSpeed;
+        if (new_throttle < throttle) throttle = 255; // Overflow
+        else throttle = new_throttle;
         timer = 0;
       }
     }
     else if (data0 == 0x02) { // 
+      Serial.println("Stop: ");
+      Serial.println(throttle);
       if(timer == THROTTLETIMER){
-        throttle = throttle<=0?0:throttle - decelerationSpeed;
+        uint8_t new_throttle = throttle - decelerationSpeed;
+        if (new_throttle > throttle) throttle = 0;
+        else throttle = new_throttle;
         timer = 0;
       }
     }
@@ -98,7 +105,7 @@ void loop()
         rotation = temp + temp2;
         //Serial.println(data1);
         //Serial.println(data2);
-        Serial.println(rotation);
+        //Serial.println(rotation);
  
     }
     else if (data0 == 0x04) {
@@ -113,7 +120,7 @@ void loop()
 
   //Write something for the Linear actuator pins. depending on the steering value.
   int potentiometer = analogRead(A4);
-  Serial.println(potentiometer);
+  //Serial.println(potentiometer);
   if(rotation > potentiometer){
     digitalWrite(L_AC, HIGH);
     digitalWrite(L_AC2, LOW);
