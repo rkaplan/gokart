@@ -126,10 +126,4 @@ static const NSTimeInterval ACCELERATION_UPDATE_INTERVAL = 0.1;
     [self setConnectingViewsHidden:NO];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 @end

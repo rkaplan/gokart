@@ -48,7 +48,6 @@ static const NSTimeInterval CHECK_CM_STATE_INTERVAL = 0.1;
     [_ble controlSetup];
     _ble.delegate = self;
     
-    [self tryToConnect];
     [NSTimer scheduledTimerWithTimeInterval:CHECK_CM_STATE_INTERVAL target:self selector:@selector(connectIfInitialized:) userInfo:nil repeats:YES];
 }
 
@@ -72,7 +71,7 @@ static const NSTimeInterval CHECK_CM_STATE_INTERVAL = 0.1;
     NSLog(@"Disconnected");
     self.isConnected = NO;
     [self notify];
-    [self bleSetup];
+    [self tryToConnect];
 }
 
 - (void)sendSteeringValue:(double)steer
@@ -86,14 +85,12 @@ static const NSTimeInterval CHECK_CM_STATE_INTERVAL = 0.1;
 
 - (void)sendGo
 {
-    NSLog(@"Go");
     UInt8 buf[3] = {GO, 0, 0};
     [self sendThreeBytesIfConnected:buf];
 }
 
 - (void)sendStop
 {
-    NSLog(@"Stop");
     UInt8 buf[3] = {STOP, 0, 0};
     [self sendThreeBytesIfConnected:buf];
 }
