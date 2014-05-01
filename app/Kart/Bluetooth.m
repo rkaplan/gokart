@@ -12,11 +12,11 @@
 
 @property (strong, nonatomic) BLE *ble;
 
-typedef enum {
+enum {
     GO = 0x1,
     STOP = 0x2,
     STEER = 0x3
-} BluetoothCommand;
+};
 
 @end
 
@@ -48,6 +48,7 @@ static const NSTimeInterval CHECK_CM_STATE_INTERVAL = 0.1;
     [_ble controlSetup];
     _ble.delegate = self;
     
+    [self tryToConnect];
     [NSTimer scheduledTimerWithTimeInterval:CHECK_CM_STATE_INTERVAL target:self selector:@selector(connectIfInitialized:) userInfo:nil repeats:YES];
 }
 
@@ -55,18 +56,7 @@ static const NSTimeInterval CHECK_CM_STATE_INTERVAL = 0.1;
 {
     if (self.ble.CM.state == CBCentralManagerStatePoweredOn) {
         [timer invalidate];
-        [self.ble findBLEPeripherals:BLUETOOTH_FIND_TIMEOUT];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, BLUETOOTH_FIND_TIMEOUT * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            if ([self.ble.peripherals count]) {
-                NSLog(@"Found device");
-                self.didFailToConnect = NO;
-                [self.ble connectPeripheral:self.ble.peripherals[0]];
-            } else {
-                NSLog(@"Failed to connect");
-                self.didFailToConnect = YES;
-                [self notify];
-            }
-        });
+        [self tryToConnect];
     }
 }
 
@@ -113,6 +103,24 @@ static const NSTimeInterval CHECK_CM_STATE_INTERVAL = 0.1;
     if (self.isConnected) {
         NSData *data = [[NSData alloc] initWithBytes:buf length:3];
         [self.ble write:data];
+    }
+}
+
+- (void)tryToConnect
+{
+    if (!self.isConnected) {
+        [self.ble findBLEPeripherals:BLUETOOTH_FIND_TIMEOUT];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, BLUETOOTH_FIND_TIMEOUT * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            if ([self.ble.peripherals count]) {
+                NSLog(@"Found device");
+                self.didFailToConnect = NO;
+                [self.ble connectPeripheral:self.ble.peripherals[0]];
+            } else {
+                NSLog(@"Failed to connect");
+                self.didFailToConnect = YES;
+                [self notify];
+            }
+        });
     }
 }
 

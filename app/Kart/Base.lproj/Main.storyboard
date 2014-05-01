@@ -95,13 +95,41 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xUj-sT-76F">
+                                <rect key="frame" x="244" y="179" width="80" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="WDF-mI-4FP"/>
+                                </constraints>
+                                <state key="normal" title="Try again">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="tryAgainButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="2Rj-wb-vys"/>
+                                </connections>
+                            </button>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Failed to connect." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h1D-ce-1KZ">
+                                <rect key="frame" x="215" y="150" width="138" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="xUj-sT-76F" secondAttribute="centerX" id="5Jc-l8-WgO"/>
                             <constraint firstAttribute="trailing" secondItem="2vL-Bj-jGX" secondAttribute="trailing" id="7xY-pq-jMC"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="DUa-6T-zcb" secondAttribute="bottom" id="BLu-FS-Iue"/>
                             <constraint firstAttribute="centerY" secondItem="l8H-9E-XwH" secondAttribute="centerY" id="CVY-hb-dpe"/>
                             <constraint firstItem="l8H-9E-XwH" firstAttribute="bottom" secondItem="9Mj-kO-ygu" secondAttribute="bottom" constant="17" id="EJe-PW-Be1"/>
+                            <constraint firstAttribute="centerX" secondItem="h1D-ce-1KZ" secondAttribute="centerX" id="EoB-yJ-yp7"/>
                             <constraint firstAttribute="centerX" secondItem="tvv-y7-pqa" secondAttribute="centerX" id="GVz-OD-ahx"/>
                             <constraint firstItem="Nk7-VP-Gkb" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="Hr4-oM-2Oe"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Nk7-VP-Gkb" secondAttribute="bottom" id="JE0-qE-jRf"/>
@@ -114,7 +142,9 @@
                             <constraint firstAttribute="trailing" secondItem="Nk7-VP-Gkb" secondAttribute="trailing" id="fn7-9v-W7Y"/>
                             <constraint firstAttribute="trailing" secondItem="DUa-6T-zcb" secondAttribute="trailing" id="g0c-Gi-qxL"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="2vL-Bj-jGX" secondAttribute="bottom" id="kub-CP-RbT"/>
+                            <constraint firstItem="xUj-sT-76F" firstAttribute="top" secondItem="h1D-ce-1KZ" secondAttribute="bottom" constant="8" symbolic="YES" id="nuX-Dh-2sc"/>
                             <constraint firstItem="B5e-Fa-H2f" firstAttribute="width" secondItem="2vL-Bj-jGX" secondAttribute="width" id="pq4-lv-VLx"/>
+                            <constraint firstAttribute="centerY" secondItem="h1D-ce-1KZ" secondAttribute="centerY" id="sM5-KQ-2T4"/>
                             <constraint firstAttribute="centerY" secondItem="tvv-y7-pqa" secondAttribute="centerY" id="stS-K2-M0L"/>
                             <constraint firstItem="B5e-Fa-H2f" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="uIO-bL-O0A"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="B5e-Fa-H2f" secondAttribute="bottom" id="y6y-fE-fAj"/>
@@ -127,10 +157,12 @@
                         <outlet property="accelerometerIndicator" destination="PDg-oq-tU8" id="nJR-gQ-HXN"/>
                         <outlet property="connectingLabel" destination="9Mj-kO-ygu" id="Eq2-5a-hNC"/>
                         <outlet property="connectingSpinner" destination="tvv-y7-pqa" id="rZj-tZ-8L8"/>
+                        <outlet property="failedToConnectLabel" destination="h1D-ce-1KZ" id="oOs-fJ-tGt"/>
                         <outlet property="goButton" destination="2vL-Bj-jGX" id="NOJ-ld-tjv"/>
                         <outlet property="loadingBox" destination="l8H-9E-XwH" id="qoU-8X-qdn"/>
                         <outlet property="overlay" destination="Nk7-VP-Gkb" id="alO-dV-cl1"/>
                         <outlet property="stopButton" destination="B5e-Fa-H2f" id="dQY-ps-41U"/>
+                        <outlet property="tryAgainButton" destination="xUj-sT-76F" id="nKs-3Q-Snj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

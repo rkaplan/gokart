@@ -19,6 +19,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *loadingBox;
 @property (weak, nonatomic) IBOutlet UILabel *connectingLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *connectingSpinner;
+@property (strong, nonatomic) IBOutlet UILabel *failedToConnectLabel;
+@property (strong, nonatomic) IBOutlet UIButton *tryAgainButton;
 
 @property (strong, nonatomic) CMMotionManager *motionManager;
 @property (strong, nonatomic) Bluetooth *bluetooth;
@@ -88,27 +90,40 @@ static const NSTimeInterval ACCELERATION_UPDATE_INTERVAL = 0.1;
 }
 
 // Views that are shown while bluetooth is connecting.
-- (NSArray *)connectingViews
+- (void)setConnectingViewsHidden:(BOOL)hidden
 {
-    return @[self.overlay, self.loadingBox, self.connectingLabel, self.connectingSpinner];
+    for (UIView *view in @[self.overlay, self.loadingBox, self.connectingLabel, self.connectingSpinner]) {
+        view.hidden = hidden;
+    }
+}
+
+- (void)setFailedToConnectViewsHidden:(BOOL)hidden
+{
+    for (UIView *view in @[self.overlay, self.failedToConnectLabel, self.tryAgainButton]) {
+        view.hidden = hidden;
+    }
 }
 
 - (void)bluetoothDidConnect
 {
-    for (UIView *view in [self connectingViews]) {
-        view.hidden = YES;
-    }
+    [self setConnectingViewsHidden:YES];
 }
 
 - (void)bluetoothDidFailToConnect
 {
+    [self setConnectingViewsHidden:YES];
+    [self setFailedToConnectViewsHidden:NO];
+}
+
+- (IBAction)tryAgainButtonPressed:(UIButton *)sender {
+    [self setFailedToConnectViewsHidden:YES];
+    [self setConnectingViewsHidden:NO];
+    [self.bluetooth tryToConnect];
 }
 
 - (void)bluetoothDidDisconnect
 {
-    for (UIView *view in [self connectingViews]) {
-        view.hidden = NO;
-    }
+    [self setConnectingViewsHidden:NO];
 }
 
 - (void)didReceiveMemoryWarning

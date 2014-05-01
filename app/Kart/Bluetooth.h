@@ -17,6 +17,8 @@ extern NSString *const kBluetoothConnectionChanged;
 @property (nonatomic) BOOL isConnected;
 @property (nonatomic) BOOL didFailToConnect;
 
+// If not currently connected, try to connect again.
+- (void)tryToConnect;
 // The following functions do nothing if not connected
 - (void)sendGo;
 - (void)sendStop;
