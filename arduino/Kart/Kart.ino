@@ -16,10 +16,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include <boards.h>
 #include <ble_shield.h>
 #include <services.h>
-#include <Servo.h> 
+#include <Servo.h>
 
-#define MOTOR_PWM_1        2
-#define MOTOR_PWM_2        3
+#define MOTOR_LEFT         9
+#define MOTOR_RIGHT        10
 
 #define L_AC               4
 #define L_AC2              5
@@ -28,15 +28,20 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #define M2_IN     A1
 #define L_AC_IN   A2
 
-#define accelerationSpeed 1
-#define decelerationSpeed 10
+#define accelerationSpeed 10
+#define decelerationSpeed 50
 
-#define THROTTLETIMER 10
+#define THROTTLETIMER 2
 //The smaller the timer, the faster the car accelerates.
+#define THROTTLE_MIN  1000
+#define THROTTLE_MAX  2000
 
 uint8_t timer;
 short rotation;     //init rotation at 0. - for Left, + for right.
-uint8_t throttle;
+int throttle;
+Servo left;
+Servo right;
+
 void setup()
 {
   // Default pins set to 9 and 8 for REQN and RDYN
@@ -48,16 +53,18 @@ void setup()
 
   // Init. and start BLE library.
   ble_begin();
-  
+
   // Enable serial debug
   Serial.begin(57600);
   pinMode(L_AC, OUTPUT);
   pinMode(L_AC2, OUTPUT);
   rotation = 0;
-  throttle = 0;
+  throttle = THROTTLE_MIN;
+  left.attach(MOTOR_LEFT);
+  right.attach(MOTOR_RIGHT);
   /*pinMode(DIGITAL_OUT_PIN, OUTPUT);
   pinMode(DIGITAL_IN_PIN, INPUT);*/
-  
+
   // Default to internally pull high, change it if you need
   timer = 0;
 }
@@ -67,8 +74,14 @@ void setup()
 
 void loop()
 {
+  ble_do_events();
   timer = timer>THROTTLETIMER?THROTTLETIMER:timer+1;
 
+  // if (!ble_connected()) {
+  //   decelerate();
+  //   process_throttle_and_rotation();
+  //   return;
+  // }
 
   // If data is ready
   while(ble_available())
@@ -77,26 +90,22 @@ void loop()
     byte data0 = ble_read();
     byte data1 = ble_read();
     byte data2 = ble_read();
-    
+
     if (data0 == 0x01) { // GO
       Serial.println("Go: ");
       Serial.println(throttle);
       if(timer == THROTTLETIMER){
-        uint8_t new_throttle = throttle + accelerationSpeed;
-        if (new_throttle < throttle) throttle = 255; // Overflow
+        int new_throttle = throttle + accelerationSpeed;
+        if (new_throttle < throttle) throttle = THROTTLE_MAX; // Overflow
+        else if (new_throttle > THROTTLE_MAX) throttle = THROTTLE_MAX;
         else throttle = new_throttle;
         timer = 0;
       }
     }
-    else if (data0 == 0x02) { // 
+    else if (data0 == 0x02) { //
       Serial.println("Stop: ");
       Serial.println(throttle);
-      if(timer == THROTTLETIMER){
-        uint8_t new_throttle = throttle - decelerationSpeed;
-        if (new_throttle > throttle) throttle = 0;
-        else throttle = new_throttle;
-        timer = 0;
-      }
+      decelerate();
     }
     else if (data0 == 0x03) {
         short temp = data1;
@@ -106,17 +115,68 @@ void loop()
         //Serial.println(data1);
         //Serial.println(data2);
         //Serial.println(rotation);
- 
+
     }
     else if (data0 == 0x04) {
         //TODO: STEERING.
     }
   }
-  
-  //Processing:
 
-  analogWrite(MOTOR_PWM_2, throttle);
-  analogWrite(MOTOR_PWM_1, throttle);
+  process_throttle_and_rotation();
+  
+  //Read from ARDUINO pins the Motor control and linear actuator readouts.
+  //Write the information to the bluetooth.
+
+  //Junk code for reference:
+/*
+    // Read and send out
+    uint16_t value = analogRead(ANALOG_IN_PIN);
+    ble_write(0x0B);
+    ble_write(value >> 8);
+    ble_write(value);
+
+  // If digital in changes, report the state
+  if (digitalRead(DIGITAL_IN_PIN) != old_state)
+  {
+    old_state = digitalRead(DIGITAL_IN_PIN);
+
+    if (digitalRead(DIGITAL_IN_PIN) == HIGH)
+    {
+      ble_write(0x0A);
+      ble_write(0x01);
+      ble_write(0x00);
+    }
+    else
+    {
+      ble_write(0x0A);
+      ble_write(0x00);
+      ble_write(0x00);
+    }
+  }
+
+  if (!ble_connected())
+  {
+    analog_enabled = false;
+    digitalWrite(DIGITAL_OUT_PIN, LOW);
+  }*/
+
+  // Allow BLE Shield to send/receive data
+  // ble_do_events();
+}
+
+void decelerate() {
+  if(timer == THROTTLETIMER){
+    int new_throttle = throttle - decelerationSpeed;
+    if (new_throttle > throttle) throttle = THROTTLE_MIN;
+    else if (new_throttle < THROTTLE_MIN) throttle = THROTTLE_MIN;
+    else throttle = new_throttle;
+    timer = 0;
+  }
+}
+
+void process_throttle_and_rotation() {
+  left.writeMicroseconds(throttle);
+  right.writeMicroseconds(throttle);
 
   //Write something for the Linear actuator pins. depending on the steering value.
   int potentiometer = analogRead(A4);
@@ -128,47 +188,4 @@ void loop()
     digitalWrite(L_AC2, HIGH);
     digitalWrite(L_AC, LOW);
   }
-  //Read from ARDUINO pins the Motor control and linear actuator readouts.
-  //Write the information to the bluetooth.
-
-
-
-  //Junk code for reference:
-/*
-    // Read and send out
-    uint16_t value = analogRead(ANALOG_IN_PIN); 
-    ble_write(0x0B);
-    ble_write(value >> 8);
-    ble_write(value);
-  
-  // If digital in changes, report the state
-  if (digitalRead(DIGITAL_IN_PIN) != old_state)
-  {
-    old_state = digitalRead(DIGITAL_IN_PIN);
-    
-    if (digitalRead(DIGITAL_IN_PIN) == HIGH)
-    {
-      ble_write(0x0A);
-      ble_write(0x01);
-      ble_write(0x00);    
-    }
-    else
-    {
-      ble_write(0x0A);
-      ble_write(0x00);
-      ble_write(0x00);
-    }
-  }
-  
-  if (!ble_connected())
-  {
-    analog_enabled = false;
-    digitalWrite(DIGITAL_OUT_PIN, LOW);
-  }*/
-  
-  // Allow BLE Shield to send/receive data
-  ble_do_events();  
 }
-
-
-
