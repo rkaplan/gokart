@@ -76,6 +76,14 @@ static const NSTimeInterval ACCELERATION_UPDATE_INTERVAL = 0.1;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleBluetoothConnectionChangedNotification:) name:kBluetoothConnectionChanged object:nil];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    if ([self.bluetooth isConnected])
+        [self.bluetooth disconnect];
+}
+
 - (void)handleBluetoothConnectionChangedNotification:(NSNotification *)notification
 {
     if (self.bluetooth.isConnected) {

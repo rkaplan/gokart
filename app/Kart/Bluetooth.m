@@ -24,6 +24,7 @@ enum {
 
 NSString *const kBluetoothConnectionChanged = @"kBluetoothConnectionChanged";
 static const int BLUETOOTH_FIND_TIMEOUT = 2;
+static const int STOPS_TO_SEND_ON_DISCONNECT = 100;
 static const NSTimeInterval CHECK_CM_STATE_INTERVAL = 0.1;
 
 - (instancetype)init
@@ -123,7 +124,21 @@ static const NSTimeInterval CHECK_CM_STATE_INTERVAL = 0.1;
 
 - (void)disconnect
 {
-//    TODO
+    // safely bring the gokart to a halt
+    for (int i = 0; i < STOPS_TO_SEND_ON_DISCONNECT; i++) {
+        [self sendStop];
+    }
+    
+    // kill the connection
+    if ([[self ble] activePeripheral])
+        [[[self ble] CM] cancelPeripheralConnection:[[self ble] activePeripheral]];
+    
+    // update state and send a notification
+    if ([[self ble] peripherals])
+        [self ble].peripherals = nil;
+    self.isConnected = NO;
+    self.didFailToConnect = NO;
+    [self notify];
 }
 
 -(void) bleDidUpdateRSSI:(NSNumber *) rssi
