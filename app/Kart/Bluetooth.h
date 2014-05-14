@@ -24,5 +24,6 @@ extern NSString *const kBluetoothConnectionChanged;
 - (void)sendStop;
 // Send a value between -1.0 (left) and 1.0 (right)
 - (void)sendSteeringValue:(double)steer;
+- (void)disconnect;
 
 @end

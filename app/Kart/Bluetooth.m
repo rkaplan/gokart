@@ -121,4 +121,19 @@ static const NSTimeInterval CHECK_CM_STATE_INTERVAL = 0.1;
     }
 }
 
+- (void)disconnect
+{
+//    TODO
+}
+
+-(void) bleDidUpdateRSSI:(NSNumber *) rssi
+{
+    
+}
+
+-(void) bleDidReceiveData:(unsigned char *) data length:(int) length
+{
+    
+}
+
 @end
