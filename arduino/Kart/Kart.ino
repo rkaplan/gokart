@@ -75,13 +75,13 @@ void setup()
 void loop()
 {
   ble_do_events();
-  timer = timer>THROTTLETIMER?THROTTLETIMER:timer+1;
+  timer = timer>=THROTTLETIMER?THROTTLETIMER:timer+1;
 
-  // if (!ble_connected()) {
-  //   decelerate();
-  //   process_throttle_and_rotation();
-  //   return;
-  // }
+  if (!ble_connected()) {
+    throttle = THROTTLE_MIN;
+    process_throttle_and_rotation();
+    return;
+  }
 
   // If data is ready
   while(ble_available())
@@ -93,7 +93,6 @@ void loop()
 
     if (data0 == 0x01) { // GO
       Serial.println("Go: ");
-      Serial.println(throttle);
       if(timer == THROTTLETIMER){
         int new_throttle = throttle + accelerationSpeed;
         if (new_throttle < throttle) throttle = THROTTLE_MAX; // Overflow
@@ -101,11 +100,12 @@ void loop()
         else throttle = new_throttle;
         timer = 0;
       }
+      Serial.println(throttle);
     }
     else if (data0 == 0x02) { //
       Serial.println("Stop: ");
-      Serial.println(throttle);
       decelerate();
+      Serial.println(throttle);
     }
     else if (data0 == 0x03) {
         short temp = data1;
@@ -118,7 +118,8 @@ void loop()
 
     }
     else if (data0 == 0x04) {
-        //TODO: STEERING.
+      Serial.println("Disconnect command received");
+        throttle = THROTTLE_MIN;
     }
   }
 

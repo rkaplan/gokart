@@ -74,14 +74,29 @@ static const NSTimeInterval ACCELERATION_UPDATE_INTERVAL = 0.1;
     
     [self setupBluetooth];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleBluetoothConnectionChangedNotification:) name:kBluetoothConnectionChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)applicationWillResignActive:(NSNotification *)notification
 {
-    [super viewWillDisappear:animated];
-    
-    if ([self.bluetooth isConnected])
-        [self.bluetooth disconnect];
+    [self.bluetooth disconnect];
+}
+
+- (void)applicationWillEnterForeground:(NSNotification *)notification
+{
+    [self reconnect];
+}
+
+- (void)reconnect
+{
+    [self setFailedToConnectViewsHidden:YES];
+    [self setConnectingViewsHidden:NO];
+    [self.bluetooth tryToConnect];
 }
 
 - (void)handleBluetoothConnectionChangedNotification:(NSNotification *)notification
@@ -124,9 +139,7 @@ static const NSTimeInterval ACCELERATION_UPDATE_INTERVAL = 0.1;
 }
 
 - (IBAction)tryAgainButtonPressed:(UIButton *)sender {
-    [self setFailedToConnectViewsHidden:YES];
-    [self setConnectingViewsHidden:NO];
-    [self.bluetooth tryToConnect];
+    [self reconnect];
 }
 
 - (void)bluetoothDidDisconnect

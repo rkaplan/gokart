@@ -11,11 +11,13 @@
 @interface Bluetooth()
 
 @property (strong, nonatomic) BLE *ble;
+@property (nonatomic) BOOL isScanning;
 
 enum {
     GO = 0x1,
     STOP = 0x2,
-    STEER = 0x3
+    STEER = 0x3,
+    DISCONNECT = 0x4
 };
 
 @end
@@ -24,7 +26,6 @@ enum {
 
 NSString *const kBluetoothConnectionChanged = @"kBluetoothConnectionChanged";
 static const int BLUETOOTH_FIND_TIMEOUT = 2;
-static const int STOPS_TO_SEND_ON_DISCONNECT = 100;
 static const NSTimeInterval CHECK_CM_STATE_INTERVAL = 0.1;
 
 - (instancetype)init
@@ -106,9 +107,11 @@ static const NSTimeInterval CHECK_CM_STATE_INTERVAL = 0.1;
 
 - (void)tryToConnect
 {
-    if (!self.isConnected) {
+    if (!self.isConnected && !self.isScanning) {
+        self.isScanning = YES;
         [self.ble findBLEPeripherals:BLUETOOTH_FIND_TIMEOUT];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, BLUETOOTH_FIND_TIMEOUT * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            self.isScanning = NO;
             if ([self.ble.peripherals count]) {
                 NSLog(@"Found device");
                 self.didFailToConnect = NO;
@@ -124,21 +127,14 @@ static const NSTimeInterval CHECK_CM_STATE_INTERVAL = 0.1;
 
 - (void)disconnect
 {
-    // safely bring the gokart to a halt
-    for (int i = 0; i < STOPS_TO_SEND_ON_DISCONNECT; i++) {
-        [self sendStop];
-    }
-    
-    // kill the connection
-    if ([[self ble] activePeripheral])
-        [[[self ble] CM] cancelPeripheralConnection:[[self ble] activePeripheral]];
-    
-    // update state and send a notification
-    if ([[self ble] peripherals])
-        [self ble].peripherals = nil;
-    self.isConnected = NO;
-    self.didFailToConnect = NO;
-    [self notify];
+    NSLog(@"Bluetooth: disconnect called");
+    // It appears sometimes there is some delay in iOS actually
+    // disconnecting when we call `cancelPeripheralConnection`, so send a
+    // disconnect sequence that we handle in the Arduino code.
+    UInt8 buf[3] = {DISCONNECT, 0, 0};
+    [self sendThreeBytesIfConnected:buf];
+    [self.ble.CM cancelPeripheralConnection:self.ble.activePeripheral];
+    if (self.ble.peripherals) self.ble.peripherals = nil;
 }
 
 -(void) bleDidUpdateRSSI:(NSNumber *) rssi
