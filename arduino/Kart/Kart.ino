@@ -37,10 +37,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #define THROTTLE_MAX  2000
 
 enum {
-  GO = 0x1,
-  STOP = 0x2,
-  STEER = 0x3,
-  DISCONNECT = 0x4
+  THROTTLE = 0x1,
+  STEER,
+  DISCONNECT
 };
 
 uint8_t timer;
@@ -76,9 +75,9 @@ void setup()
 
 short shortFromBytes(byte most_sig, byte least_sig) {
   short temp = most_sig;
-  most_sig <<= sizeof(byte);
+  temp <<= 8;
   short temp2 = least_sig;
-  return most_sig + least_sig;
+  return temp + temp2;
 }
 
 void loop()
@@ -100,19 +99,14 @@ void loop()
     byte data1 = ble_read();
     byte data2 = ble_read();
 
-    if (data0 == GO) {
-      Serial.println("Go: ");
+    if (data0 == THROTTLE) {
+      Serial.println("Throttle: ");
       if(timer == THROTTLETIMER){
-        int new_throttle = THROTTLE_MIN + (int)shortFromBytes(data1, data2);
+        int new_throttle = (int)shortFromBytes(data1, data2);
         if (new_throttle < THROTTLE_MIN) new_throttle = THROTTLE_MIN;
         if (new_throttle > THROTTLE_MAX) new_throttle = THROTTLE_MAX;
         throttle = new_throttle;
       }
-      Serial.println(throttle);
-    }
-    else if (data0 == STOP) {
-      Serial.println("Stop: ");
-      decelerate();
       Serial.println(throttle);
     }
     else if (data0 == STEER) {
@@ -127,15 +121,15 @@ void loop()
   process_throttle_and_rotation();
 }
 
-void decelerate() {
-  if(timer == THROTTLETIMER){
-    int new_throttle = throttle - decelerationSpeed;
-    if (new_throttle > throttle) throttle = THROTTLE_MIN;
-    else if (new_throttle < THROTTLE_MIN) throttle = THROTTLE_MIN;
-    else throttle = new_throttle;
-    timer = 0;
-  }
-}
+//void decelerate() {
+//  if(timer == THROTTLETIMER){
+//    int new_throttle = throttle - decelerationSpeed;
+//    if (new_throttle > throttle) throttle = THROTTLE_MIN;
+//    else if (new_throttle < THROTTLE_MIN) throttle = THROTTLE_MIN;
+//    else throttle = new_throttle;
+//    timer = 0;
+//  }
+//}
 
 void process_throttle_and_rotation() {
   left.writeMicroseconds(throttle);
