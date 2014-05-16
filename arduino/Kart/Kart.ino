@@ -18,8 +18,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include <services.h>
 #include <Servo.h>
 
-#define MOTOR_LEFT         9
-#define MOTOR_RIGHT        10
+#define MOTOR_LEFT         10
+#define MOTOR_RIGHT        11
 
 #define L_AC               4
 #define L_AC2              5
@@ -35,6 +35,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 //The smaller the timer, the faster the car accelerates.
 #define THROTTLE_MIN  1000
 #define THROTTLE_MAX  2000
+
+enum {
+  GO = 0x1,
+  STOP = 0x2,
+  STEER = 0x3,
+  DISCONNECT = 0x4
+};
 
 uint8_t timer;
 short rotation;     //init rotation at 0. - for Left, + for right.
@@ -62,15 +69,17 @@ void setup()
   throttle = THROTTLE_MIN;
   left.attach(MOTOR_LEFT);
   right.attach(MOTOR_RIGHT);
-  /*pinMode(DIGITAL_OUT_PIN, OUTPUT);
-  pinMode(DIGITAL_IN_PIN, INPUT);*/
 
   // Default to internally pull high, change it if you need
   timer = 0;
 }
 
-
-
+short shortFromBytes(byte most_sig, byte least_sig) {
+  short temp = most_sig;
+  most_sig <<= sizeof(byte);
+  short temp2 = least_sig;
+  return most_sig + least_sig;
+}
 
 void loop()
 {
@@ -91,78 +100,31 @@ void loop()
     byte data1 = ble_read();
     byte data2 = ble_read();
 
-    if (data0 == 0x01) { // GO
+    if (data0 == GO) {
       Serial.println("Go: ");
       if(timer == THROTTLETIMER){
-        int new_throttle = throttle + accelerationSpeed;
-        if (new_throttle < throttle) throttle = THROTTLE_MAX; // Overflow
-        else if (new_throttle > THROTTLE_MAX) throttle = THROTTLE_MAX;
-        else throttle = new_throttle;
-        timer = 0;
+        int new_throttle = THROTTLE_MIN + (int)shortFromBytes(data1, data2);
+        if (new_throttle < THROTTLE_MIN) new_throttle = THROTTLE_MIN;
+        if (new_throttle > THROTTLE_MAX) new_throttle = THROTTLE_MAX;
+        throttle = new_throttle;
       }
       Serial.println(throttle);
     }
-    else if (data0 == 0x02) { //
+    else if (data0 == STOP) {
       Serial.println("Stop: ");
       decelerate();
       Serial.println(throttle);
     }
-    else if (data0 == 0x03) {
-        short temp = data1;
-        temp <<= 8;
-        short temp2 = data2;
-        rotation = temp + temp2;
-        //Serial.println(data1);
-        //Serial.println(data2);
-        //Serial.println(rotation);
-
+    else if (data0 == STEER) {
+        rotation = shortFromBytes(data1, data2);
     }
-    else if (data0 == 0x04) {
+    else if (data0 == DISCONNECT) {
       Serial.println("Disconnect command received");
-        throttle = THROTTLE_MIN;
+      throttle = THROTTLE_MIN;
     }
   }
 
   process_throttle_and_rotation();
-  
-  //Read from ARDUINO pins the Motor control and linear actuator readouts.
-  //Write the information to the bluetooth.
-
-  //Junk code for reference:
-/*
-    // Read and send out
-    uint16_t value = analogRead(ANALOG_IN_PIN);
-    ble_write(0x0B);
-    ble_write(value >> 8);
-    ble_write(value);
-
-  // If digital in changes, report the state
-  if (digitalRead(DIGITAL_IN_PIN) != old_state)
-  {
-    old_state = digitalRead(DIGITAL_IN_PIN);
-
-    if (digitalRead(DIGITAL_IN_PIN) == HIGH)
-    {
-      ble_write(0x0A);
-      ble_write(0x01);
-      ble_write(0x00);
-    }
-    else
-    {
-      ble_write(0x0A);
-      ble_write(0x00);
-      ble_write(0x00);
-    }
-  }
-
-  if (!ble_connected())
-  {
-    analog_enabled = false;
-    digitalWrite(DIGITAL_OUT_PIN, LOW);
-  }*/
-
-  // Allow BLE Shield to send/receive data
-  // ble_do_events();
 }
 
 void decelerate() {
