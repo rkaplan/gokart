@@ -14,10 +14,9 @@
 @property (nonatomic) BOOL isScanning;
 
 enum {
-    GO = 0x1,
-    STOP = 0x2,
-    STEER = 0x3,
-    DISCONNECT = 0x4
+    THROTTLE = 0x1,
+    STEER,
+    DISCONNECT,
 };
 
 @end
@@ -85,15 +84,12 @@ static const NSTimeInterval CHECK_CM_STATE_INTERVAL = 0.1;
     [self sendThreeBytesIfConnected:buf];
 }
 
-- (void)sendGo
+- (void)sendThrottleValue:(double)throttle
 {
-    UInt8 buf[3] = {GO, 0, 0};
-    [self sendThreeBytesIfConnected:buf];
-}
-
-- (void)sendStop
-{
-    UInt8 buf[3] = {STOP, 0, 0};
+    int value = throttle * 1000 + 1000;
+    if (value < 1000) value = 1000;
+    if (value > 2000) value = 2000;
+    UInt8 buf[3] = {THROTTLE, value >> 8, value};
     [self sendThreeBytesIfConnected:buf];
 }
 
@@ -133,7 +129,7 @@ static const NSTimeInterval CHECK_CM_STATE_INTERVAL = 0.1;
     // disconnect sequence that we handle in the Arduino code.
     UInt8 buf[3] = {DISCONNECT, 0, 0};
     [self sendThreeBytesIfConnected:buf];
-    [self.ble.CM cancelPeripheralConnection:self.ble.activePeripheral];
+    if (self.ble.activePeripheral) [self.ble.CM cancelPeripheralConnection:self.ble.activePeripheral];
     if (self.ble.peripherals) self.ble.peripherals = nil;
 }
 

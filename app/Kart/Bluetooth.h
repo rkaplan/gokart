@@ -20,8 +20,8 @@ extern NSString *const kBluetoothConnectionChanged;
 // If not currently connected, try to connect again.
 - (void)tryToConnect;
 // The following functions do nothing if not connected
-- (void)sendGo;
-- (void)sendStop;
+// Send a value between 0.0 (motors off) and 1.0 (motors at full speed)
+- (void)sendThrottleValue:(double)throttle;
 // Send a value between -1.0 (left) and 1.0 (right)
 - (void)sendSteeringValue:(double)steer;
 - (void)disconnect;

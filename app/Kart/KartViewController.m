@@ -11,9 +11,9 @@
 #import "KartUIButton.h"
 
 @interface KartViewController ()
-@property (strong, nonatomic) IBOutlet KartUIButton *stopButton;
-@property (strong, nonatomic) IBOutlet KartUIButton *goButton;
 @property (weak, nonatomic) IBOutlet UIView *accelerometerIndicator;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *throttleHeightConstraint;
+@property (weak, nonatomic) IBOutlet UIView *throttleContainerView;
 
 @property (weak, nonatomic) IBOutlet UIView *overlay;
 @property (weak, nonatomic) IBOutlet UILabel *loadingBox;
@@ -30,6 +30,11 @@
 
 static const NSTimeInterval ACCELEROMETER_UPDATE_INTERVAL = 0.1;
 static const NSTimeInterval ACCELERATION_UPDATE_INTERVAL = 0.1;
+
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
 
 - (CMMotionManager *)motionManager
 {
@@ -59,13 +64,47 @@ static const NSTimeInterval ACCELERATION_UPDATE_INTERVAL = 0.1;
     [NSTimer scheduledTimerWithTimeInterval:ACCELERATION_UPDATE_INTERVAL target:self selector:@selector(updateAcceleration:) userInfo:nil repeats:YES];
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self handleTouches:touches];
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self handleTouches:touches];
+}
+
+- (void)handleTouches:(NSSet *)touches
+{
+    if ([touches count] == 1) {
+        for (UITouch *touch in touches) {
+            CGPoint location = [touch locationInView:self.throttleContainerView];
+            CGFloat throttle = self.throttleContainerView.bounds.size.height - location.y;
+            if (throttle < 0) throttle = 0;
+            self.throttleHeightConstraint.constant = throttle;
+        }
+    }
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self stop];
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self stop];
+}
+
+- (void)stop
+{
+    self.throttleHeightConstraint.constant = 0;
+}
+
 - (void)updateAcceleration:(NSTimer *)timer
 {
-    if (self.stopButton.isTouchInside) {
-        [self.bluetooth sendStop];
-    } else if (self.goButton.isTouchInside) {
-        [self.bluetooth sendGo];
-    }
+    double throttle = self.throttleHeightConstraint.constant / self.throttleContainerView.bounds.size.height;
+    [self.bluetooth sendThrottleValue:throttle];
 }
 
 - (void)viewDidLoad
