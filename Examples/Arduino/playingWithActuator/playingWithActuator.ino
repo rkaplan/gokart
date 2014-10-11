@@ -3,7 +3,7 @@ void setup() {
   // initialize the digital pin as an output.
   pinMode(4, OUTPUT);
   pinMode(5, OUTPUT);
-  Serial.begin(115200);
+  Serial.begin(57600);
 }
 
 // the loop routine runs over and over again forever:
