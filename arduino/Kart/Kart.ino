@@ -21,18 +21,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #define MOTOR_LEFT         10
 #define MOTOR_RIGHT        11
 
-#define L_AC               4
-#define L_AC2              5
+#define L_AC        4
+#define L_AC2       5
+#define L_AC_IN     A4
 
-#define M1_IN     A0
-#define M2_IN     A1
-#define L_AC_IN   A2
-
-#define accelerationSpeed 10
-#define decelerationSpeed 50
-
-#define THROTTLETIMER 2
 //The smaller the timer, the faster the car accelerates.
+#define THROTTLETIMER 2
 #define THROTTLE_MIN  1000
 #define THROTTLE_MAX  2000
 
@@ -100,7 +94,7 @@ void loop()
     byte data2 = ble_read();
 
     if (data0 == THROTTLE) {
-      Serial.println("Throttle: ");
+      Serial.print("Throttle: ");
       if(timer == THROTTLETIMER){
         int new_throttle = (int)shortFromBytes(data1, data2);
         if (new_throttle < THROTTLE_MIN) new_throttle = THROTTLE_MIN;
@@ -110,7 +104,9 @@ void loop()
       Serial.println(throttle);
     }
     else if (data0 == STEER) {
+        Serial.print("Rotation: ");
         rotation = shortFromBytes(data1, data2);
+        Serial.println(rotation);
     }
     else if (data0 == DISCONNECT) {
       Serial.println("Disconnect command received");
@@ -136,7 +132,7 @@ void process_throttle_and_rotation() {
   right.writeMicroseconds(throttle);
 
   //Write something for the Linear actuator pins. depending on the steering value.
-  int potentiometer = analogRead(A4);
+  int potentiometer = analogRead(L_AC_IN);
   //Serial.println(potentiometer);
   if(rotation > potentiometer){
     digitalWrite(L_AC, HIGH);
