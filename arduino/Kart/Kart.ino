@@ -19,7 +19,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include <Servo.h>
 
 #define MOTOR_LEFT         10
-#define MOTOR_RIGHT        11
+#define MOTOR_RIGHT        6
 
 #define L_AC        4
 #define L_AC2       5
@@ -39,6 +39,7 @@ enum {
 uint8_t timer;
 short rotation;     //init rotation at 0. - for Left, + for right.
 int throttle;
+boolean should_rotate;
 Servo left;
 Servo right;
 
@@ -78,9 +79,11 @@ void loop()
 {
   ble_do_events();
   timer = timer>=THROTTLETIMER?THROTTLETIMER:timer+1;
+  should_rotate = true;
 
   if (!ble_connected()) {
     throttle = THROTTLE_MIN;
+    should_rotate = false;
     process_throttle_and_rotation();
     return;
   }
@@ -130,6 +133,16 @@ void loop()
 void process_throttle_and_rotation() {
   left.writeMicroseconds(throttle);
   right.writeMicroseconds(throttle);
+
+  process_rotation();
+}
+
+void process_rotation() {
+  if (!should_rotate) {
+    digitalWrite(L_AC, LOW);
+    digitalWrite(L_AC2, LOW);
+    return;
+  }
 
   //Write something for the Linear actuator pins. depending on the steering value.
   int potentiometer = analogRead(L_AC_IN);
