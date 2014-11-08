@@ -102,6 +102,7 @@ void loop()
         int new_throttle = (int)shortFromBytes(data1, data2);
         if (new_throttle < THROTTLE_MIN) new_throttle = THROTTLE_MIN;
         if (new_throttle > THROTTLE_MAX) new_throttle = THROTTLE_MAX;
+        new_throttle = map(new_throttle, 1000, 2000, 1000, 1250);
         throttle = new_throttle;
       }
       Serial.println(throttle);
@@ -147,11 +148,16 @@ void process_rotation() {
   //Write something for the Linear actuator pins. depending on the steering value.
   int potentiometer = analogRead(L_AC_IN);
   //Serial.println(potentiometer);
-  if(rotation > potentiometer){
+  int MIDDLE = 512;
+  int TOLERANCE = 300;
+  if(rotation > (MIDDLE + TOLERANCE)){
     digitalWrite(L_AC, HIGH);
     digitalWrite(L_AC2, LOW);
-  }else{
+  }else if (rotation < (MIDDLE - TOLERANCE)){
     digitalWrite(L_AC2, HIGH);
     digitalWrite(L_AC, LOW);
+  } else {
+    digitalWrite(L_AC, LOW);
+    digitalWrite(L_AC2, LOW);
   }
 }
