@@ -235,7 +235,7 @@
 				ORGANIZATIONNAME = "Stanford Electric Go Kart";
 				TargetAttributes = {
 					E2EB875219076BDA005A73FE = {
-						DevelopmentTeam = U8C75PC2JS;
+						DevelopmentTeam = 43552FVQ63;
 					};
 					E2EB877319076BDA005A73FE = {
 						TestTargetID = E2EB875219076BDA005A73FE;

@@ -30,6 +30,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #define THROTTLE_MIN  1000
 #define THROTTLE_MAX  2000
 
+#define STEERING_TOLERANCE 10
+
 enum {
   THROTTLE = 0x1,
   STEER,
@@ -148,14 +150,14 @@ void process_rotation() {
   //Write something for the Linear actuator pins. depending on the steering value.
   int potentiometer = analogRead(L_AC_IN);
   //Serial.println(potentiometer);
-  int MIDDLE = 512;
-  int TOLERANCE = 300;
-  if(rotation > (MIDDLE + TOLERANCE)){
-    digitalWrite(L_AC, HIGH);
-    digitalWrite(L_AC2, LOW);
-  }else if (rotation < (MIDDLE - TOLERANCE)){
-    digitalWrite(L_AC2, HIGH);
-    digitalWrite(L_AC, LOW);
+  if (abs(rotation - potentiometer) > STEERING_TOLERANCE) {
+    if (rotation > potentiometer) {
+        digitalWrite(L_AC, HIGH);
+        digitalWrite(L_AC2, LOW);
+    } else {
+        digitalWrite(L_AC2, HIGH);
+        digitalWrite(L_AC, LOW);
+    }
   } else {
     digitalWrite(L_AC, LOW);
     digitalWrite(L_AC2, LOW);

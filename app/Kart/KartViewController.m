@@ -24,12 +24,15 @@
 
 @property (strong, nonatomic) CMMotionManager *motionManager;
 @property (strong, nonatomic) Bluetooth *bluetooth;
+
+@property (nonatomic) double lastSentPitch;
 @end
 
 @implementation KartViewController
 
 static const NSTimeInterval ACCELEROMETER_UPDATE_INTERVAL = 0.1;
 static const NSTimeInterval ACCELERATION_UPDATE_INTERVAL = 0.1;
+static const double PITCH_CHANGE_THRESHOLD = 0.05;
 
 - (BOOL)prefersStatusBarHidden
 {
@@ -57,7 +60,10 @@ static const NSTimeInterval ACCELERATION_UPDATE_INTERVAL = 0.1;
             [UIView animateWithDuration:ACCELEROMETER_UPDATE_INTERVAL animations:^() {
                 self.accelerometerIndicator.center = center;
             }];
-            [self.bluetooth sendSteeringValue:pitch];
+            if (ABS(self.lastSentPitch - pitch) > PITCH_CHANGE_THRESHOLD) {
+                self.lastSentPitch = pitch;
+                [self.bluetooth sendSteeringValue:pitch];
+            }
         });
     }];
     
