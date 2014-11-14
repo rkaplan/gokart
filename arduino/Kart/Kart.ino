@@ -25,6 +25,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #define L_AC2       5
 #define L_AC_IN     A4
 
+#define ROTATION_MIN 140
+#define ROTATION_MAX 370
+
 //The smaller the timer, the faster the car accelerates.
 #define THROTTLETIMER 2
 #define THROTTLE_MIN  1000
@@ -111,7 +114,11 @@ void loop()
     }
     else if (data0 == STEER) {
         Serial.print("Rotation: ");
+        // The app sends a bluetooth value from 0-1024
         rotation = shortFromBytes(data1, data2);
+        rotation = map(rotation, 0, 1024, ROTATION_MIN, ROTATION_MAX);
+        if (rotation < ROTATION_MIN) rotation = ROTATION_MIN;
+        if (rotation > ROTATION_MAX) rotation = ROTATION_MAX;
         Serial.println(rotation);
     }
     else if (data0 == DISCONNECT) {
@@ -149,9 +156,8 @@ void process_rotation() {
 
   //Write something for the Linear actuator pins. depending on the steering value.
   int potentiometer = analogRead(L_AC_IN);
-  //Serial.println(potentiometer);
   if (abs(rotation - potentiometer) > STEERING_TOLERANCE) {
-    if (rotation > potentiometer) {
+    if (rotation < potentiometer) {
         digitalWrite(L_AC, HIGH);
         digitalWrite(L_AC2, LOW);
     } else {
