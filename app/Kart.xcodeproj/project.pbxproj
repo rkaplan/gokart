@@ -18,7 +18,6 @@
 		E2EB876A19076BDA005A73FE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2EB876819076BDA005A73FE /* Main.storyboard */; };
 		E2EB876D19076BDA005A73FE /* KartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2EB876C19076BDA005A73FE /* KartViewController.m */; };
 		E2EB876F19076BDA005A73FE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2EB876E19076BDA005A73FE /* Images.xcassets */; };
-		E2EB877619076BDA005A73FE /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB877519076BDA005A73FE /* XCTest.framework */; };
 		E2EB877719076BDA005A73FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB875619076BDA005A73FE /* Foundation.framework */; };
 		E2EB877819076BDA005A73FE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB875A19076BDA005A73FE /* UIKit.framework */; };
 		E2EB878019076BDA005A73FE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2EB877E19076BDA005A73FE /* InfoPlist.strings */; };
@@ -59,7 +58,6 @@
 		E2EB876C19076BDA005A73FE /* KartViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KartViewController.m; sourceTree = "<group>"; };
 		E2EB876E19076BDA005A73FE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E2EB877419076BDA005A73FE /* KartTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KartTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E2EB877519076BDA005A73FE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		E2EB877D19076BDA005A73FE /* KartTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KartTests-Info.plist"; sourceTree = "<group>"; };
 		E2EB877F19076BDA005A73FE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E2EB878119076BDA005A73FE /* KartTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KartTests.m; sourceTree = "<group>"; };
@@ -86,7 +84,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2EB877619076BDA005A73FE /* XCTest.framework in Frameworks */,
 				E2EB877819076BDA005A73FE /* UIKit.framework in Frameworks */,
 				E2EB877719076BDA005A73FE /* Foundation.framework in Frameworks */,
 			);
@@ -134,7 +131,6 @@
 				E2EB875619076BDA005A73FE /* Foundation.framework */,
 				E2EB875819076BDA005A73FE /* CoreGraphics.framework */,
 				E2EB875A19076BDA005A73FE /* UIKit.framework */,
-				E2EB877519076BDA005A73FE /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -422,6 +418,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Kart/Kart-Prefix.pch";
 				INFOPLIST_FILE = "Kart/Kart-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -438,6 +435,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Kart/Kart-Prefix.pch";
 				INFOPLIST_FILE = "Kart/Kart-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
