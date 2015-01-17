@@ -24,6 +24,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #define L_AC        4
 #define L_AC2       5
 #define L_AC_IN     A4
+// For debugging purposes we copy value of L_AC_IN to L_AC_IN_COPY
+#define L_AC_IN_COPY A5
 
 #define ROTATION_MIN 140
 #define ROTATION_MAX 370
@@ -64,6 +66,8 @@ void setup()
   Serial.begin(57600);
   pinMode(L_AC, OUTPUT);
   pinMode(L_AC2, OUTPUT);
+  pinMode(L_AC_IN, INPUT);
+  pinMode(L_AC_IN_COPY, OUTPUT);
   rotation = 0;
   throttle = THROTTLE_MIN;
   left.attach(MOTOR_LEFT);
@@ -156,6 +160,11 @@ void process_rotation() {
 
   //Write something for the Linear actuator pins. depending on the steering value.
   int potentiometer = analogRead(L_AC_IN);
+  analogWrite(L_AC_IN_COPY, map(potentiometer, 0, 1024, 0, 256));
+  Serial.print("Potentiometer: ");
+  Serial.println(potentiometer);
+  Serial.print("Rotation: ");
+  Serial.println(rotation);
   if (abs(rotation - potentiometer) > STEERING_TOLERANCE) {
     if (rotation < potentiometer) {
         digitalWrite(L_AC, HIGH);
